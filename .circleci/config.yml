@@ -1,34 +1,26 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-
-# Use a package of configuration called an orb.
-orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
-
 jobs:
   print_hello:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - run: echo "hello"
-
   print_world:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - run: echo "world"
+  greet_me:
+    docker: 
+      - image: circleci/node:13.8.0
+    steps:
+      run: echo "Hi, " $MY_NAME_VAR
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  welcome:
     jobs:
       - print_hello
       - print_world:
           requires:
             - print_hello
+      - greet_me
