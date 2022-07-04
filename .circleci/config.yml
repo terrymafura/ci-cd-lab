@@ -8,7 +8,7 @@ jobs:
           command: echo "hello world" > output.txt
       - persist_to_workspace:
           root: .
-          paths: myfiles
+          paths: *
 
   print_output_file:
     docker: 
