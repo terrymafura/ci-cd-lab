@@ -1,4 +1,13 @@
 version: 2.1
+commands:
+  print_pipeline_id:
+    description: "Printing workflow id from env"
+    parameters:
+      to: 
+        type: string
+        default: $CIRCLE_WORKFLOW_ID
+    steps: echo << parameters.to >>
+
 jobs:
   save_hello_world_output:
     docker:
@@ -19,6 +28,8 @@ jobs:
           at: .
       - run:
           command: cat output.txt
+      - print_pipeline_id:
+          to: $CIRCLE_WORKFLOW_ID
 
 
 workflows:
