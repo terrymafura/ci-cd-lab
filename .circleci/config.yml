@@ -3,7 +3,7 @@ commands:
   print_pipeline_id:
     parameters:
       to: 
-        type: enum
+        type: string
         default: $CIRCLE_WORKFLOW_ID
     steps:
       - run: echo << parameters.to >>
