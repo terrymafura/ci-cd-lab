@@ -10,7 +10,8 @@ jobs:
       #     command: mkdir -m /tmp/myfiles
       - persist_to_workspace:
           root: /tmp
-          paths: myfiles
+          paths: 
+            - myfiles
 
   print_output_file:
     docker: 
