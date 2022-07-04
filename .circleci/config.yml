@@ -5,7 +5,8 @@ commands:
       to: 
         type: enum
         default: $CIRCLE_WORKFLOW_ID
-    steps: echo << parameters.to >>
+    steps:
+      - run: echo << parameters.to >>
 
 jobs:
   save_hello_world_output:
