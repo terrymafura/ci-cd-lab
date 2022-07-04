@@ -1,10 +1,9 @@
 version: 2.1
 commands:
   print_pipeline_id:
-    description: "Printing workflow id from env"
     parameters:
       to: 
-        type: string
+        type: enum
         default: $CIRCLE_WORKFLOW_ID
     steps: echo << parameters.to >>
 
