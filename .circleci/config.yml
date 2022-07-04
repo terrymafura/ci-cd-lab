@@ -6,12 +6,10 @@ jobs:
     steps:
       - run:
           command: echo "hello world" > output.txt
-      # - run:
-      #     command: mkdir -m /tmp/myfiles
       - persist_to_workspace:
           root: /tmp
           paths: 
-            - myfiles
+            - output.txt
 
   print_output_file:
     docker: 
