@@ -18,7 +18,11 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: 
-            - output.txt
+            - /bar
+      - run:
+          name: Failed persist process
+          command: echo "Hello Error!"
+          when: on_fail
 
   print_output_file:
     docker: 
