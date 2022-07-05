@@ -18,11 +18,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: 
-            - /bar
-      - run:
-          name: Failed persist process
-          command: echo "Hello Error!"
-          when: on_fail
+            - output.txt
 
   print_output_file:
     docker: 
@@ -34,6 +30,12 @@ jobs:
           command: cat output.txt
       - print_pipeline_id:
           to: $CIRCLE_WORKFLOW_ID
+      - run:
+          command: return 1
+      - run:
+          name: Failed persist process
+          command: echo "Hello Error!"
+          when: on_fail
 
 
 workflows:
