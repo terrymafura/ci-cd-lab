@@ -7,9 +7,9 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          aws-access-key-id: $MY_KEY_ID
-          aws-secret-access-key: $MY_KEY
-          aws-region: $MY_REGION
+          aws-access-key-id: MY_KEY_ID
+          aws-secret-access-key: MY_KEY
+          aws-region: MY_REGION
 
   create_inventory_file:
     docker: 
