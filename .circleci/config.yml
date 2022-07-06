@@ -1,69 +1,19 @@
-version: 2.1
-commands:
-  print_pipeline_id:
-    parameters:
-      to: 
-        type: string
-        default: $CIRCLE_WORKFLOW_ID
-    steps:
-      - run: echo << parameters.to >>
-  
-
+version: 2.1  
+orbs:
+  aws-cli: circleci/aws-cli@2.0
 jobs:
-  # save_hello_world_output:
-  #   docker:
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         command: echo "hello world" > output.txt
-  #     - persist_to_workspace:
-  #         root: .
-  #         paths: 
-  #           - output.txt
-
-  # print_output_file:
-  #   docker: 
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: .
-  #     - run:
-  #         command: cat output.txt
-  #     - print_pipeline_id:
-  #         to: $CIRCLE_WORKFLOW_ID
-      # - run:
-      #     command: return 1
-      # - run:
-      #     name: Failed persist process
-      #     command: echo "Hello Error!"
-      #     when: on_fail
-  
   setup_aws_profile:
-    docker: 
-      - image: cimg/aws:2022.6.1
-        auth:
-          username: maffsojah
-          password: $DOCKERHUB_PASSWORD
+    executor: aws-cli/default
     steps:
       - checkout
-      - run:
-          name: "add aws key id"
-          command: aws configure set aws_access_key_id $MY_KEY_ID --profile default
-      - run:
-          name: "add aws key"
-          command: aws configure set aws_secret_access_key $MY_KEY --profile default
-      - run:
-          name: "add aws region and output"
-          command: aws configure set region $MY_REGION --profile default && aws configure set output "json" --profile default
+      - aws-cli/setup:
+          aws-access-key-id: MY_KEY_ID
+          aws-secret-access-key: MY_KEY
+          aws-region: MY_REGION
 
   create_inventory_file:
     docker: 
-      - image: cimg/aws:2022.6.1
-        auth:
-          username: maffsojah
-          password: $DOCKERHUB_PASSWORD
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -75,10 +25,7 @@ jobs:
 
   add_ip_to_inventory_file:
     docker: 
-      - image: cimg/aws:2022.6.1
-        auth:
-          username: maffsojah
-          password: $DOCKERHUB_PASSWORD
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - attach_workspace:
@@ -92,13 +39,10 @@ jobs:
 
 
 workflows:
-  welcome:
+  aws-setup:
     jobs:
-      # - save_hello_world_output
-      # - print_output_file:
-      #     requires:
-      #       - save_hello_world_output
-      - setup_aws_profile
+      - setup_aws_profile:
+          context: aws
       - create_inventory_file
       - add_ip_to_inventory_file:
           requires:
