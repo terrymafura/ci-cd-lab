@@ -7,91 +7,41 @@ commands:
         default: $CIRCLE_WORKFLOW_ID
     steps:
       - run: echo << parameters.to >>
-  
 
 jobs:
-  # save_hello_world_output:
-  #   docker:
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         command: echo "hello world" > output.txt
-  #     - persist_to_workspace:
-  #         root: .
-  #         paths: 
-  #           - output.txt
-
-  # print_output_file:
-  #   docker: 
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: .
-  #     - run:
-  #         command: cat output.txt
-  #     - print_pipeline_id:
-  #         to: $CIRCLE_WORKFLOW_ID
-      # - run:
-      #     command: return 1
-      # - run:
-      #     name: Failed persist process
-      #     command: echo "Hello Error!"
-      #     when: on_fail
-  
-  setup_aws_profile:
-    docker: 
-      - image: cimg/aws
+  save_hello_world_output:
+    docker:
+      - image: circleci/node:13.8.0
     steps:
-      - checkout
       - run:
-          name: "add aws key id"
-          command: aws configure set aws_access_key_id $MY_KEY_ID --profile default
-      - run:
-          name: "add aws key"
-          command: aws configure set aws_secret_access_key $MY_KEY --profile default
-      - run:
-          name: "add aws region and output"
-          command: aws configure set region $MY_REGION --profile default && aws configure set output "json" --profile default
-
-  create_inventory_file:
-    docker: 
-      - image: cimg/aws
-    steps:
-      - checkout
-      - run:
-          command: touch inventory
+          command: echo "hello world" > output.txt
       - persist_to_workspace:
           root: .
           paths: 
-            - inventory
+            - output.txt
 
-  add_ip_to_inventory_file:
+  print_output_file:
     docker: 
-      - image: cimg/aws
+      - image: circleci/node:13.8.0
     steps:
-      - checkout
       - attach_workspace:
           at: .
       - run:
-          command: echo "[all]" > inventory
+          command: cat output.txt
+      - print_pipeline_id:
+          to: $CIRCLE_WORKFLOW_ID
       - run:
-          command: aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> inventory
+          command: return 1
       - run:
-          command: cat inventory
+          name: Failed persist process
+          command: echo "Hello Error!"
+          when: on_fail
 
 
 workflows:
   welcome:
     jobs:
-      # - save_hello_world_output
-      # - print_output_file:
-      #     requires:
-      #       - save_hello_world_output
-      - setup_aws_profile
-      - create_inventory_file
-      - add_ip_to_inventory_file:
+      - save_hello_world_output
+      - print_output_file:
           requires:
-            - setup_aws_profile
-            - create_inventory_file
+            - save_hello_world_output
