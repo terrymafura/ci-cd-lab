@@ -42,10 +42,7 @@ jobs:
   
   setup_aws_profile:
     docker: 
-      - image: cimg/aws
-        auth:
-          username: maffsojah
-          password: $DOCKERHUB_PASSWORD
+      - image: cimg/aws:2022.6.1
     steps:
       - checkout
       - run:
@@ -60,10 +57,7 @@ jobs:
 
   create_inventory_file:
     docker: 
-      - image: cimg/aws
-        auth:
-          username: maffsojah
-          password: $DOCKERHUB_PASSWORD
+      - image: cimg/aws:2022.6.1
     steps:
       - checkout
       - run:
@@ -75,10 +69,7 @@ jobs:
 
   add_ip_to_inventory_file:
     docker: 
-      - image: cimg/aws
-        auth:
-          username: maffsojah
-          password: $DOCKERHUB_PASSWORD
+      - image: cimg/aws:2022.6.1
     steps:
       - checkout
       - attach_workspace:
