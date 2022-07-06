@@ -5,7 +5,6 @@ jobs:
   setup_aws_profile:
     executor: aws-cli/default
     steps:
-      - checkout
       - aws-cli/setup:
           aws-access-key-id: MY_KEY_ID
           aws-secret-access-key: MY_KEY
