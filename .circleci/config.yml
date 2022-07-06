@@ -7,9 +7,9 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          aws-access-key-id: MY_KEY_ID
-          aws-secret-access-key: MY_KEY
-          aws-region: MY_REGION
+          aws-access-key-id: $MY_KEY_ID
+          aws-secret-access-key: $MY_KEY
+          aws-region: $MY_REGION
 
   create_inventory_file:
     docker: 
@@ -42,7 +42,8 @@ workflows:
   aws-setup:
     jobs:
       - setup_aws_profile:
-          context: aws
+          context: 
+            - aws
       - create_inventory_file
       - add_ip_to_inventory_file:
           requires:
