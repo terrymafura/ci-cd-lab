@@ -1,0 +1,18 @@
+[
+    {
+		"ParameterKey": "ServerInstanceType",
+		"ParameterValue": "t2.micro"
+    },
+    {
+        "ParameterKey": "ServerInstanceAMI",
+        "ParameterValue": "ami-"
+    },
+    {
+        "ParameterKey": "myVPC",
+        "ParameterValue": "vpc-"
+    },
+    {
+        "ParameterKey": "PublicSubnet",
+        "ParameterValue": "subnet-"
+    }
+]
