@@ -24,7 +24,7 @@ jobs:
               --template-file ec2instance.yml \
               --stack-name terry-${CIRCLE_WORKFLOW_ID:0:5}
       - run:
-          commands: return 1
+          command: return 1
       - destroy_environments
   
   configure_infrastructure:
