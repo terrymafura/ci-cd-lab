@@ -40,9 +40,7 @@ jobs:
 workflows:
   aws-setup:
     jobs:
-      - setup_aws_profile:
-          context: 
-            - aws
+      - setup_aws_profile
       - create_inventory_file
       - add_ip_to_inventory_file:
           requires:
