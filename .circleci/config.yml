@@ -1,48 +1,21 @@
 version: 2.1  
 orbs:
   aws-cli: circleci/aws-cli@3.1
-jobs:
-  setup_aws_profile:
-    executor: aws-cli/default
-    steps:
-      - aws-cli/setup:
-          aws-access-key-id: MY_KEY_ID
-          aws-secret-access-key: MY_KEY
-          aws-region: MY_REGION
-
-  create_inventory_file:
-    docker: 
-      - image: circleci/node:13.8.0
+jobs:  
+  create_infrastructure:
+    docker:
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
-          command: touch inventory
-      - persist_to_workspace:
-          root: .
-          paths: 
-            - inventory
-
-  add_ip_to_inventory_file:
-    docker: 
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          command: echo "[all]" > inventory
-      - run:
-          command: aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udacity" --output text >> inventory
-      - run:
-          command: cat inventory
-
+          name: Create CloudFormation Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file ec2instance.yml \
+              --stack-name terry-${CIRCLE_WORKFLOW_ID:0:5}
+              --region us-east-1
 
 workflows:
-  aws-setup:
+  terry_cicd_workflow:
     jobs:
-      - setup_aws_profile
-      - create_inventory_file
-      - add_ip_to_inventory_file:
-          requires:
-            - setup_aws_profile
-            - create_inventory_file
+      - create_infrastructure
