@@ -1,5 +1,7 @@
 version: 2.1
-
+orbs:
+  aws-cli: circleci/aws-cli@3.1
+  
 commands:
   destroy_environments:
     steps:
@@ -9,8 +11,6 @@ commands:
           command: |
             aws cloudformation delete-stack --stack-name terry-${CIRCLE_WORKFLOW_ID:0:5}
 
-orbs:
-  aws-cli: circleci/aws-cli@3.1
 jobs:  
   create_infrastructure:
     docker:
@@ -55,13 +55,11 @@ jobs:
             else
               return 1
             fi
-      - aws-cli/destroy_environments
+      - destroy_environments
 
 workflows:
   terry_cicd_workflow:
     jobs:
       - create_infrastructure
       # - configure_infrastructure
-      - smoke_test:
-          requires:
-            - create_infrastructure
+      - smoke_test
