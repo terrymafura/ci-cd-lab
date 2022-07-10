@@ -23,6 +23,9 @@ jobs:
             aws cloudformation deploy \
               --template-file ec2instance.yml \
               --stack-name terry-${CIRCLE_WORKFLOW_ID:0:5}
+      - run:
+          commands: return 1
+      - destroy_environments
   
   configure_infrastructure:
     docker:
@@ -62,4 +65,4 @@ workflows:
     jobs:
       - create_infrastructure
       # - configure_infrastructure
-      - smoke_test
+      # - smoke_test
