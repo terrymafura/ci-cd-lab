@@ -1,7 +1,7 @@
 version: 2.1
 
 commands:
-  destroy_environment:
+  destroy_environments:
     steps:
       - run:
           name: Destroy environment
@@ -55,7 +55,7 @@ jobs:
             else
               return 1
             fi
-      - destroy_environment
+      - aws-cli/destroy_environments
 
 workflows:
   terry_cicd_workflow:
