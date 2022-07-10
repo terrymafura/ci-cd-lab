@@ -5,6 +5,7 @@ commands:
     steps:
       - run:
           name: Destroy environment
+          when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name terry-${CIRCLE_WORKFLOW_ID:0:5}
 
@@ -54,8 +55,7 @@ jobs:
             else
               return 1
             fi
-      - destroy_environment:
-          when: on_fail
+      - destroy_environment
 
 workflows:
   terry_cicd_workflow:
