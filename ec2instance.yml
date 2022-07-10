@@ -19,7 +19,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId: ami-052efd3df9dad4825
-      KeyName: ansible-key
+      KeyName: udacity
       SecurityGroups:
         - !Ref InstanceSecurityGroup
       Tags: 

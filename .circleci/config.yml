@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["e0:9d:a7:8f:d5:c6:f2:fd:15:67:59:9f:f9:e2:5e:f4"]
+          fingerprints: ["3c:7d:40:74:8c:f9:35:1e:c2:5f:11:bc:59:56:0e:c7"]
       - run:
           name: Install Ansible
           command: |
@@ -33,5 +33,5 @@ jobs:
 workflows:
   terry_cicd_workflow:
     jobs:
-      # - create_infrastructure
-      - configure_infrastructure
+      - create_infrastructure
+      # - configure_infrastructure
