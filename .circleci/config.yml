@@ -4,17 +4,18 @@ version: 2.1
 jobs:
   say-hello:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
           name: "Say hello"
           command: |
-            apk add --update ansible tar gzip curl
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            ./aws/install
-            /usr/local/bin/aws --version
+            yum update -y && yum install -y python3 curl tar gzip openssh-client && \
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+            python3 get-pip.py --user
+            python3 -m pip install --user ansible
+            export PATH=$PATH:~/.local/bin
+            ansible --version
 
 workflows:
   say-hello-workflow:
