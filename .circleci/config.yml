@@ -17,8 +17,11 @@ jobs:
               --filters "Name=tag:project,Values=terry-udapeople" \
               --output text >> ip.txt
             export BACKEND_IP=$(cat ip.txt)
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "API_URL = ${API_URL}"
+            echo API_URL = "http://${BACKEND_IP}:3030" >> ip.txt
+            cat ip.txt
             echo "******* Done Checking EC2 IP ********"
-            echo ${BACKEND_IP}
             echo ${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
