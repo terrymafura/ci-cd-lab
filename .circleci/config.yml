@@ -10,8 +10,13 @@ jobs:
       - run:
           name: "Say hello"
           command: |
-            curl --silent --location https://rpm.nodesource.com/setup_13.x | bash -
-            yum install -y nodejs
+            aws --version
+            echo "******* Checking EC2 IP ********"
+            aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIPAddress' \
+              --filters "Name=tag:project,Values=terry-udapeople"
+            echo "******* Done Checking EC2 IP ********"
+            echo ${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
   say-hello-workflow:
