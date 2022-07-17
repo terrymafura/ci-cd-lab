@@ -16,8 +16,9 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=terry-udapeople" \
               --output text >> ip.txt
+            export BACKEND_IP=$(cat ip.txt)
             echo "******* Done Checking EC2 IP ********"
-            cat ip.txt
+            echo ${BACKEND_IP}
             echo ${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
