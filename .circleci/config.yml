@@ -10,7 +10,7 @@ jobs:
       - run:
           name: "Say hello"
           command: |
-            yum update -y && yum install -y python3 curl tar gzip openssh-client && \
+            yum update -y && yum install -y python3 curl tar gzip openssh-clients && \
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
             python3 get-pip.py --user
             python3 -m pip install --user ansible
