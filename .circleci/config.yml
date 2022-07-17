@@ -15,10 +15,6 @@ jobs:
             python3 get-pip.py --user && \
             python3 -m pip install --user ansible
             ansible --version
-      - run:
-          name: Check NPM and Ansible versions
-          command: |
-            ansible --version
 
 workflows:
   say-hello-workflow:
