@@ -14,8 +14,10 @@ jobs:
             echo "******* Checking EC2 IP ********"
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:project,Values=terry-udapeople"
+              --filters "Name=tag:project,Values=terry-udapeople" \
+              --output text >> ip.txt
             echo "******* Done Checking EC2 IP ********"
+            cat ip.txt
             echo ${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
