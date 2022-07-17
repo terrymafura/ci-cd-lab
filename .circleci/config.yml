@@ -10,7 +10,8 @@ jobs:
       - run:
           name: "Say hello"
           command: |
-            uname -r
+            curl --silent --location https://rpm.nodesource.com/setup_16.x | bash -
+            yum install -y nodejs
 
 workflows:
   say-hello-workflow:
