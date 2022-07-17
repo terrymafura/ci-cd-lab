@@ -14,13 +14,10 @@ jobs:
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
             python3 get-pip.py --user && \
             python3 -m pip install --user ansible
-            curl --silent --location https://rpm.nodesource.com/setup_14.x | bash -
-            yum install -y nodejs
+            ansible --version
       - run:
           name: Check NPM and Ansible versions
           command: |
-            node --version
-            npm --version
             ansible --version
 
 workflows:
