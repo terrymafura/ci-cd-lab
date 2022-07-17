@@ -10,7 +10,7 @@ jobs:
       - run:
           name: "Say hello"
           command: |
-            yum install -y node
+            uname -r
 
 workflows:
   say-hello-workflow:
