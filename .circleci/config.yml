@@ -10,13 +10,14 @@ jobs:
       - run:
           name: "Say hello"
           command: |
-            yum update -y && yum install -y python3 curl tar gzip openssh-clients && \
-            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-            python3 get-pip.py --user
-            python3 -m pip install --user ansible
-            export PATH=$PATH:~/.local/bin
-            ansible --version
-            ssh -V
+            export API_URL="http://127.0.0.1:3030"
+            echo "${API_URL}"
+            if curl "${API_URL}" | grep "ok"
+            then
+              return 0
+            else
+              return 1
+            fi
 
 workflows:
   say-hello-workflow:
