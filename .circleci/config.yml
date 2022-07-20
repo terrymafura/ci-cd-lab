@@ -12,7 +12,7 @@ jobs:
           command: |
             export API_URL="http://127.0.0.1:3030"
             echo "${API_URL}"
-            if curl "${API_URL}" | grep "ok"
+            if curl "${API_URL}" | grep "ok";
             then
               return 0
             else
